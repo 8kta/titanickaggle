@@ -188,7 +188,7 @@ else:
 #Outliers
 if len(missing_data)<1:
     print('There is no missing data left.')
-    outliers = input('Do you want to study the outliers?. [y,n]\n')
+    outliers = input('Do you want to study the outliers by IsolationForest?. [y,n]\n')
     if outliers == 'y':
         # identify outliers in the training dataset
         iso = IsolationForest(contamination=0.1, n_estimators=100,max_features=1)
