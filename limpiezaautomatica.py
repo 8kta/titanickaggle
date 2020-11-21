@@ -40,7 +40,9 @@ if len(test) < 1 : test = "test.csv"
 
 try:
     predi = input('Write the name of the prediction feature.\n')
+    if len(predi) < 1 : predi = "Survived"
     Id = input('Column that label the dataframe.\n')
+    if len(Id) < 1 : Id = "PassengerId"
         #predi = srt(pred)
     dbtrainid = pd.read_csv(train , sep=',',header='infer')
     train_ID = dbtrainid[Id]
@@ -56,6 +58,7 @@ except:
     print('Can not found the file')
     quit()
 
+#Borrando columnas
 delete = input('Do you want to delete any column?, [name of column/ n]\n')
 while True:
         if delete == 'n':
@@ -194,7 +197,18 @@ if len(missing_data)<1:
             iso.fit(columna,objetivo)
             dbunioncol = iso.fit_predict(columna,objetivo)
             ser = pd.Series(dbunioncol).map({1:0,-1:1})
-            print(columns,'\n',ser.value_counts())
+            sercuenta = ser.value_counts()
+            # maxim = input('What is the maximum of outliers you want to see:\n')
+            while True:
+                if sercuenta[0] == dbunion.shape[0]:
+                    print(columns,'no tiene outliers.')
+                    break    
+                else:
+                    print(columns,'have',sercuenta[1], 'outliers.')
+                    break
+                    
+            #if sercuenta[0]< int(maxim):
+            #    print(columns, '\n has',sercuenta ,'outliers.')
             #try:
              #   if ser.value_counts()[1]<50:
               #      print(columns ,'\n', ser.value_counts())
@@ -208,8 +222,8 @@ if len(missing_data)<1:
             #break
         #dbunion = iso.fit_predict(dbunion)
         #dbunion = pd.DataFrame(iso.fit_predict(dbunion) , columns = dbunion.columns)
-        print(len(dbunion))
-        print('Outliers are gone.')
+        print('Each column have',len(dbunion),'data.')
+        #print('Outliers are gone.')
         #mask = yhat != -1
         #dbtrain, objetivo = dbtrain[mask, :], objetivo[mask]
     else:
